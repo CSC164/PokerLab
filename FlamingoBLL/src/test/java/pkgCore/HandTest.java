@@ -80,9 +80,12 @@ public class HandTest {
 		// TODO: Test 2-3-4, score should be 9
 
 		ArrayList<Card> cards = new ArrayList<Card>();
-		cards.add(new Card(eSuit.CLUBS,eRank.TWO));
-		cards.add(new Card(eSuit.CLUBS,eRank.THREE));
-		cards.add(new Card(eSuit.CLUBS,eRank.FOUR));
+		
+		// TODO:  REMOVE THE COMMENTS FROM THE NEXT THREE LINES
+		
+		//cards.add(new Card(eSuit.CLUBS,eRank.TWO));
+		//cards.add(new Card(eSuit.CLUBS,eRank.THREE));
+		//cards.add(new Card(eSuit.CLUBS,eRank.FOUR));
 		
 		int[] score = HandHelper(cards);
 		

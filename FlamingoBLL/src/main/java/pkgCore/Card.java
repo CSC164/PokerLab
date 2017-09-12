@@ -2,16 +2,6 @@ package pkgCore;
 import pkgEnum.*;
 public class Card implements Comparable {
 
-	private eSuit eSuit;
-	private eRank eRank;
-	
-
-	public Card(eSuit eSuit, eRank eRank) {
-		this.eSuit = eSuit;
-		this.eRank = eRank;
-	}
-
-
 	//	TODO: Card has two attributes, eRank and eSuit, add these attributes
 	
 	
