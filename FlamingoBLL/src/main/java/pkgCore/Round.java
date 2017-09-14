@@ -26,8 +26,10 @@ public class Round {
 			eGameResult = eGameResult.NATURAL;
 			break;
 		default:
-			r = new Roll();
+			
 			do {
+				r = new Roll();
+				rolls.add(r);
 				if (r.getScore() == ComeOutScore) {
 					eGameResult = eGameResult.POINT;
 					break;
