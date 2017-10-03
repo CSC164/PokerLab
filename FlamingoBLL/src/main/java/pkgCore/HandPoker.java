@@ -1,15 +1,23 @@
 package pkgCore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import pkgEnum.eCardNo;
 import pkgEnum.eHandStrength;
+import pkgEnum.eRank;
 import pkgEnum.eSuit;
 
 public class HandPoker extends Hand {
 
+	private ArrayList<CardRankCount> CRC = null;
+
 	public HandPoker() {
 		this.setHS(new HandScorePoker());
+	}
+
+	protected ArrayList<CardRankCount> getCRC() {
+		return CRC;
 	}
 
 	@Override
@@ -18,6 +26,9 @@ public class HandPoker extends Hand {
 		// etc) until
 		// one of the hands is true, then score the hand
 
+		Collections.sort(super.getCards());
+		Frequency();
+
 		if (isRoyalFlush()) {
 
 		} else if (isStraightFlush()) {
@@ -25,6 +36,54 @@ public class HandPoker extends Hand {
 		}
 
 		return null;
+	}
+
+	private void Frequency() {
+
+		CRC = new ArrayList<CardRankCount>();
+
+		int iCnt = 0;
+		int iPos = 0;
+
+		for (eRank eRank : eRank.values()) {
+			iCnt = (CountRank(eRank));
+			if (iCnt > 0) {
+				iPos = FindCardRank(eRank);
+				CRC.add(new CardRankCount(eRank, iCnt, iPos));
+			}
+		}
+
+		Collections.sort(CRC);
+
+		for (CardRankCount crcount : CRC) {
+			System.out.print(crcount.getiCnt());
+			System.out.print(" ");
+			System.out.print(crcount.geteRank());
+			System.out.print(" ");
+			System.out.println(crcount.getiCardPosition());
+		}
+
+	}
+
+	private int CountRank(eRank eRank) {
+		int iCnt = 0;
+		for (Card c : super.getCards()) {
+			if (c.geteRank() == eRank) {
+				iCnt++;
+			}
+		}
+		return iCnt;
+	}
+
+	private int FindCardRank(eRank eRank) {
+		int iPos = 0;
+
+		for (iPos = 0; iPos < super.getCards().size(); iPos++) {
+			if (super.getCards().get(iPos).geteRank() == eRank) {
+				break;
+			}
+		}
+		return iPos;
 	}
 
 	public boolean isRoyalFlush() {
@@ -70,8 +129,21 @@ public class HandPoker extends Hand {
 
 	public boolean isFullHouse() {
 		boolean bisFullHouse = false;
-		// TODO : Implement this method
+
+		if (this.CRC.size() == 2) {
+			if ((CRC.get(0).getiCnt() == 3) && (CRC.get(1).getiCnt() == 2)) {
+				bisFullHouse = true;
+				HandScorePoker HSP = (HandScorePoker) this.getHS();
+				HSP.seteHandStrength(eHandStrength.FullHouse);
+				HSP.setHiCard(this.getCards().get(CRC.get(0).getiCardPosition()));
+				HSP.setLoCard(this.getCards().get(CRC.get(1).getiCardPosition()));
+				ArrayList<Card> kickers = new ArrayList<Card>();
+				HSP.setKickers(kickers);
+				this.setHS(HSP);
+			}
+		}
 		return bisFullHouse;
+
 	}
 
 	public boolean isFlush() {
@@ -106,8 +178,51 @@ public class HandPoker extends Hand {
 
 	public boolean isThreeOfAKind() {
 		boolean bisThreeOfAKind = false;
+
+		if (this.getCRC().size() == 3) {
+			if (this.getCRC().get(0).getiCnt() == 3) {
+
+				HandScorePoker HSP = (HandScorePoker)this.getHS();
+				HSP.seteHandStrength(eHandStrength.ThreeOfAKind);
+				
+				
+				int iGetCard = this.getCRC().get(0).getiCardPosition();
+				
+				HSP.setHiCard(this.getCards().get(iGetCard));
+				HSP.setLoCard(null);
+				
+		
+				
+				HSP.setKickers(FindTheKickers(this.getCRC()));
+				
+				
+
+				
+				
+				this.setHS(HSP);
+				
+				
+				
+			}
+		}
+
 		// TODO : Implement this method
 		return bisThreeOfAKind;
+	}
+	
+	private ArrayList<Card> FindTheKickers(ArrayList<CardRankCount> CRC)
+	{
+		ArrayList<Card> kickers = new ArrayList<Card>();
+		
+		for (CardRankCount crcCheck: CRC)
+		{
+			if (crcCheck.getiCnt() == 1)
+			{
+				kickers.add(this.getCards().get(crcCheck.getiCardPosition()));
+			}
+		}
+		
+		return kickers;
 	}
 
 	public boolean isTwoPair() {
