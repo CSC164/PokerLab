@@ -2,7 +2,7 @@ package pkgCore;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+import pkgConstants.*;
 import pkgEnum.eCardNo;
 import pkgEnum.eHandStrength;
 import pkgEnum.eRank;
@@ -38,54 +38,6 @@ public class HandPoker extends Hand {
 		return null;
 	}
 
-	private void Frequency() {
-
-		CRC = new ArrayList<CardRankCount>();
-
-		int iCnt = 0;
-		int iPos = 0;
-
-		for (eRank eRank : eRank.values()) {
-			iCnt = (CountRank(eRank));
-			if (iCnt > 0) {
-				iPos = FindCardRank(eRank);
-				CRC.add(new CardRankCount(eRank, iCnt, iPos));
-			}
-		}
-
-		Collections.sort(CRC);
-
-		for (CardRankCount crcount : CRC) {
-			System.out.print(crcount.getiCnt());
-			System.out.print(" ");
-			System.out.print(crcount.geteRank());
-			System.out.print(" ");
-			System.out.println(crcount.getiCardPosition());
-		}
-
-	}
-
-	private int CountRank(eRank eRank) {
-		int iCnt = 0;
-		for (Card c : super.getCards()) {
-			if (c.geteRank() == eRank) {
-				iCnt++;
-			}
-		}
-		return iCnt;
-	}
-
-	private int FindCardRank(eRank eRank) {
-		int iPos = 0;
-
-		for (iPos = 0; iPos < super.getCards().size(); iPos++) {
-			if (super.getCards().get(iPos).geteRank() == eRank) {
-				break;
-			}
-		}
-		return iPos;
-	}
-
 	public boolean isRoyalFlush() {
 		boolean bIsRoyalFlush = false;
 		// TODO : Implement this method
@@ -97,51 +49,16 @@ public class HandPoker extends Hand {
 		// TODO : Implement this method
 		return bisStraightFlush;
 	}
-
+	
+	// TODO : Implement this method
 	public boolean isFourOfAKind() {
 		boolean bisFourOfAKind = false;
-		HandScorePoker HS = (HandScorePoker) super.getHS();
-
-		if (super.getCards().get(eCardNo.FIRST.getiCardNo()).geteRank() == super.getCards()
-				.get(eCardNo.FOURTH.getiCardNo()).geteRank()) {
-
-			HS.seteHandStrength(eHandStrength.FourOfAKind);
-			HS.setHiCard(super.getCards().get(eCardNo.FIRST.getiCardNo()));
-			HS.setLoCard(null);
-			ArrayList<Card> kickers = new ArrayList<Card>();
-			kickers.add(super.getCards().get(eCardNo.FIFTH.getiCardNo()));
-			HS.setKickers(kickers);
-			bisFourOfAKind = true;
-
-		} else if (super.getCards().get(eCardNo.SECOND.getiCardNo()).geteRank() == super.getCards()
-				.get(eCardNo.FIFTH.getiCardNo()).geteRank()) {
-			HS.seteHandStrength(eHandStrength.FourOfAKind);
-			HS.setHiCard(super.getCards().get(eCardNo.SECOND.getiCardNo()));
-			HS.setLoCard(null);
-			ArrayList<Card> kickers = new ArrayList<Card>();
-			kickers.add(super.getCards().get(eCardNo.FIRST.getiCardNo()));
-			HS.setKickers(kickers);
-			bisFourOfAKind = true;
-		}
-
 		return bisFourOfAKind;
 	}
 
+	// TODO : Implement this method
 	public boolean isFullHouse() {
 		boolean bisFullHouse = false;
-
-		if (this.CRC.size() == 2) {
-			if ((CRC.get(0).getiCnt() == 3) && (CRC.get(1).getiCnt() == 2)) {
-				bisFullHouse = true;
-				HandScorePoker HSP = (HandScorePoker) this.getHS();
-				HSP.seteHandStrength(eHandStrength.FullHouse);
-				HSP.setHiCard(this.getCards().get(CRC.get(0).getiCardPosition()));
-				HSP.setLoCard(this.getCards().get(CRC.get(1).getiCardPosition()));
-				ArrayList<Card> kickers = new ArrayList<Card>();
-				HSP.setKickers(kickers);
-				this.setHS(HSP);
-			}
-		}
 		return bisFullHouse;
 
 	}
@@ -176,53 +93,22 @@ public class HandPoker extends Hand {
 		return bisStraight;
 	}
 
+	// This is how to implement one of the 'counting' hand types. Testing to see if
+	// there are three of the same rank.
 	public boolean isThreeOfAKind() {
 		boolean bisThreeOfAKind = false;
-
 		if (this.getCRC().size() == 3) {
-			if (this.getCRC().get(0).getiCnt() == 3) {
-
-				HandScorePoker HSP = (HandScorePoker)this.getHS();
+			if (this.getCRC().get(0).getiCnt() == Constants.THREE_OF_A_KIND) {
+				HandScorePoker HSP = (HandScorePoker) this.getHS();
 				HSP.seteHandStrength(eHandStrength.ThreeOfAKind);
-				
-				
 				int iGetCard = this.getCRC().get(0).getiCardPosition();
-				
 				HSP.setHiCard(this.getCards().get(iGetCard));
 				HSP.setLoCard(null);
-				
-		
-				
 				HSP.setKickers(FindTheKickers(this.getCRC()));
-				
-				
-
-				
-				
 				this.setHS(HSP);
-				
-				
-				
 			}
 		}
-
-		// TODO : Implement this method
 		return bisThreeOfAKind;
-	}
-	
-	private ArrayList<Card> FindTheKickers(ArrayList<CardRankCount> CRC)
-	{
-		ArrayList<Card> kickers = new ArrayList<Card>();
-		
-		for (CardRankCount crcCheck: CRC)
-		{
-			if (crcCheck.getiCnt() == 1)
-			{
-				kickers.add(this.getCards().get(crcCheck.getiCardPosition()));
-			}
-		}
-		
-		return kickers;
 	}
 
 	public boolean isTwoPair() {
@@ -241,6 +127,53 @@ public class HandPoker extends Hand {
 		boolean bisHighCard = false;
 		// TODO : Implement this method
 		return bisHighCard;
+	}
+
+	private ArrayList<Card> FindTheKickers(ArrayList<CardRankCount> CRC) {
+		ArrayList<Card> kickers = new ArrayList<Card>();
+
+		for (CardRankCount crcCheck : CRC) {
+			if (crcCheck.getiCnt() == 1) {
+				kickers.add(this.getCards().get(crcCheck.getiCardPosition()));
+			}
+		}
+
+		return kickers;
+	}
+
+	private void Frequency() {
+		CRC = new ArrayList<CardRankCount>();
+		int iCnt = 0;
+		int iPos = 0;
+		for (eRank eRank : eRank.values()) {
+			iCnt = (CountRank(eRank));
+			if (iCnt > 0) {
+				iPos = FindCardRank(eRank);
+				CRC.add(new CardRankCount(eRank, iCnt, iPos));
+			}
+		}
+		Collections.sort(CRC);
+	}
+
+	private int CountRank(eRank eRank) {
+		int iCnt = 0;
+		for (Card c : super.getCards()) {
+			if (c.geteRank() == eRank) {
+				iCnt++;
+			}
+		}
+		return iCnt;
+	}
+
+	private int FindCardRank(eRank eRank) {
+		int iPos = 0;
+
+		for (iPos = 0; iPos < super.getCards().size(); iPos++) {
+			if (super.getCards().get(iPos).geteRank() == eRank) {
+				break;
+			}
+		}
+		return iPos;
 	}
 
 }

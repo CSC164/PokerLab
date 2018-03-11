@@ -3,42 +3,29 @@ package pkgCore;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import pkgEnum.eRank;
+
 public class HandBlackJack extends Hand {
 
 	@Override
 	public HandScore ScoreHand() {
 
 		LinkedList<Integer> iScores = new LinkedList<Integer>();
-
 		HandScoreBlackJack HS = new HandScoreBlackJack();
 		Collections.sort(super.getCards());
 		iScores.add(0);
 		
 		for (Card c : super.getCards()) {
-			switch (c.geteRank()) {
-			case TWO:
-			case THREE:
-			case FOUR:
-			case FIVE:
-			case SIX:
-			case SEVEN:
-			case EIGHT:
-			case NINE:
-			case TEN:
-				ChangeScore(iScores,c.geteRank().getiRankNbr());
-				break;
-			case JACK:
-			case QUEEN:
-			case KING:
-				ChangeScore(iScores,10);
-				break;				
-			case ACE:
-				ChangeScore(iScores,1);				
-				iScores.add(new Integer(iScores.getLast() + 10));
+			if (c.geteRank()== eRank.ACE)
+			{
+				ChangeScore(iScores,c.geteRank().getiCardValue());				
+				iScores.add(new Integer(iScores.getLast() + c.geteRank().getiCardValueMax() -1 ));
 			}
-
-		}
-		
+			else
+			{
+				ChangeScore(iScores,c.geteRank().getiCardValue());	
+			}
+		}		
 		HS.setNumericScores(iScores);
 
 		super.setHS(HS);
