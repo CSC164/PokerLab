@@ -28,7 +28,7 @@ public abstract class Hand {
 		HS = hS;
 	}
 
-	public abstract HandScore ScoreHand();
+	public abstract HandScore ScoreHand() throws Exception;
 
 	protected void AddCard(Card c) {
 		cards.add(c);

@@ -2,58 +2,54 @@ package pkgEnum;
 
 public enum eHandStrength {
 
-	RoyalFlush(100, "isHandRoyalFlush") {
+	RoyalFlush(100, "isRoyalFlush") {
 		public String toString() {
 			return "Royal Flush";
 		}
 	},
-	StraightFlush(90, "isHandStraightFlush") {
+	StraightFlush(90, "isStraightFlush") {
 		public String toString() {
 			return "Straight Flush";
 		}
 	},
-	FourOfAKind(80, "isHandFourOfAKind") {
+	FourOfAKind(80, "isFourOfAKind") {
 		public String toString() {
 			return "Four of a Kind";
 		}
 	},
-	FullHouse(70, "isHandFullHouse") {
+	FullHouse(70, "isFullHouse") {
 		public String toString() {
 			return "Full House";
 		}
 	},
-	Flush(60, "isHandFlush") {
+	Flush(60, "isFlush") {
 		public String toString() {
 			return "Flush";
 		}
 	},
-	Straight(50, "isHandStraight") {
+	Straight(50, "isStraight") {
 		public String toString() {
 			return "Straight";
 		}
 	},
-	AcesAndEights(45, "isAcesAndEights") {
-		public String toString() {
-			return "Aces and Eights";
-		}
-	},
-	ThreeOfAKind(40, "isHandThreeOfAKind") {
+ 
+	ThreeOfAKind(40, "isThreeOfAKind") {
 		public String toString() {
 			return "Three of a Kind";
 		}
 	},
-	TwoPair(30, "isHandTwoPair") {
+	TwoPair(30, "isTwoPair") {
 		public String toString() {
 			return "Two Pairs";
 		}
 	},
 
-	Pair(20, "isHandPair") {
+	Pair(20, "isPair") {
 		public String toString() {
 			return "One Pair";
 		}
 	},
-	HighCard(10, "isHandHighCard") {
+	HighCard(10, "isHighCard") {
 		public String toString() {
 			return "High Card";
 		}
