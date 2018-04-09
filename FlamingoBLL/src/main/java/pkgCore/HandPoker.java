@@ -79,7 +79,9 @@ public class HandPoker extends Hand {
 		if (isStraightFlush() && super.getCards().get(0).geteRank() == eRank.ACE
 				&& super.getCards().get(1).geteRank() == eRank.KING) {
 			bIsRoyalFlush = true;
+			HandScorePoker HSP = (HandScorePoker) this.getHS();
 			HSP.seteHandStrength(eHandStrength.RoyalFlush);
+			this.setHS(HSP);
 
 		}
 		return bIsRoyalFlush;
@@ -90,7 +92,9 @@ public class HandPoker extends Hand {
 
 		if (isFlush() && isStraight()) {
 			bisStraightFlush = true;
+			HandScorePoker HSP = (HandScorePoker) this.getHS();
 			HSP.seteHandStrength(eHandStrength.StraightFlush);
+			this.setHS(HSP);
 
 		}
 		return bisStraightFlush;
@@ -237,9 +241,8 @@ public class HandPoker extends Hand {
 				bisTwoPair = true;
 				HandScorePoker HSP = (HandScorePoker) this.getHS();
 				HSP.seteHandStrength(eHandStrength.TwoPair);
-				int iGetCard = this.getCRC().get(0).getiCardPosition();
-				HSP.setHiCard(this.getCards().get(iGetCard));
-				HSP.setLoCard(null);
+				HSP.setHiCard(this.getCards().get(this.getCRC().get(0).getiCardPosition()));
+				HSP.setLoCard(this.getCards().get(this.getCRC().get(1).getiCardPosition()));
 				HSP.setKickers(FindTheKickers(this.getCRC()));
 				this.setHS(HSP);
 			}
