@@ -8,7 +8,6 @@ public class HandException extends Exception {
 
 	public HandException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public HandException(String arg0, Hand hand) {
