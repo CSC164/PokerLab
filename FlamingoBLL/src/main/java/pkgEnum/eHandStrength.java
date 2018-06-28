@@ -1,11 +1,11 @@
 package pkgEnum;
-
+ 
 public enum eHandStrength {
 
 	RoyalFlush(100, "isRoyalFlush") {
 		public String toString() {
 			return "Royal Flush";
-		}
+		} 
 	},
 	StraightFlush(90, "isStraightFlush") {
 		public String toString() {

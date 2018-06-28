@@ -39,7 +39,7 @@ public class HandPoker extends Hand {
 		if (super.getCards().size() != 5) {
 			throw new HandException("Not five cards", this);
 		}
-
+ 
 		try {
 			Class<?> c = Class.forName("pkgCore.HandPoker");
 
@@ -74,61 +74,136 @@ public class HandPoker extends Hand {
 		return HSP;
 	}
 
+	//TODO: Finish this method
 	private boolean isRoyalFlush() {
 		boolean bIsRoyalFlush = false;
+
+		if ((isFlush()) && (isStraight()) && (isAce()))
+
+		{
+			bIsRoyalFlush = true;
+		}
+
 		return bIsRoyalFlush;
 	}
 
+	//TODO: Finish this method
+	private boolean isAce() {
+		boolean bIsAce = false;
+
+		if (super.getCards().get(0).geteRank() == eRank.ACE) {
+			bIsAce = true;
+		}
+
+		return bIsAce;
+	}
+
+	//TODO: Finish this method
 	public boolean isStraightFlush() {
 		boolean bisStraightFlush = false;
+
+		if ((isFlush()) && (isStraight()))
+
+		{
+			bisStraightFlush = true;
+		}
+
 		return bisStraightFlush;
 	}
 
-	// TODO : Implement this method
+	//TODO: Finish this method
 	public boolean isFourOfAKind() {
 		boolean bisFourOfAKind = false;
 		return bisFourOfAKind;
 	}
 
-	// TODO : Implement this method
+	//TODO: Finish this method
 	public boolean isFullHouse() {
 		boolean bisFullHouse = false;
 
+		if ((getCRC().size() == 2) && 
+				(getCRC().get(0).getiCnt() == 3) &&
+				(getCRC().get(1).getiCnt() == 2)) 
+		{
+			bisFullHouse = true;			
+			HandScorePoker HS = getHSP();
+			HS.seteHandStrength(eHandStrength.FullHouse);
+			HS.setHiCard(getCards().get(getCRC().get(0).getiCardPosition()));
+			HS.setLoCard(getCards().get(getCRC().get(1).getiCardPosition()));
+			HS.setKickers(FindTheKickers(getCRC()));			
+		}
+		
 		return bisFullHouse;
 
 	}
 
+	//TODO: Finish this method
 	public boolean isFlush() {
+
 		boolean bisFlush = false;
+		int iCnt = 0;
+		for (eSuit suit : eSuit.values()) {
+			for (Card c : super.getCards()) {
+				if (c.geteSuit() == suit) {
+					iCnt++;
+				}
+			}
+
+			switch (iCnt) {
+			case 5:
+				bisFlush = true;
+				return bisFlush;
+			case 0:
+				break;
+			default:
+				bisFlush = false;
+				return bisFlush;
+			}
+		}
 
 		return bisFlush;
 	}
 
+	//TODO: Finish this method
 	public boolean isStraight() {
-		boolean bisStraight = true;
+		boolean bisStraight = false;
+		
+		//	A-2-3-4-5		
+		//	2-3-4-5-6
+		//	3-4-5-6-7
+		//	10-J-Q-K-A
+		
+		//	I would use a loop....!  
+		
 		return bisStraight;
 	}
 
-	// This is how to implement one of the 'counting' hand types. Testing to see if
-	// there are three of the same rank.
+	//TODO: Finish this method
 	public boolean isThreeOfAKind() {
 		boolean bisThreeOfAKind = false;
+
 
 		return bisThreeOfAKind;
 	}
 
+	//TODO: Finish this method
+	
 	public boolean isTwoPair() {
 		boolean bisTwoPair = false;
 
 		return bisTwoPair;
 	}
 
+	//TODO: Finish this method
 	public boolean isPair() {
 		boolean bisPair = false;
 
+		
 		return bisPair;
 	}
 
+	//TODO: Finish this method
+	
 	public boolean isHighCard() {
 		boolean bisHighCard = false;
 

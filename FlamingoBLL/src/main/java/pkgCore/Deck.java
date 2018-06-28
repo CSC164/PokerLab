@@ -21,9 +21,11 @@ public class Deck {
 	}
 
 	public Card Draw() {
-
 		return cardsInDeck.remove(0);
-
 	}
 
+	public int NbrOfCards()
+	{
+		return cardsInDeck.size();
+	}
 }

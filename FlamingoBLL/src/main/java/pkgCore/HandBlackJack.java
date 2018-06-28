@@ -8,7 +8,7 @@ import pkgEnum.eRank;
 public class HandBlackJack extends Hand {
 
 	@Override
-	public HandScore ScoreHand() {
+	public HandScore ScoreHand( ) {
 
 		LinkedList<Integer> iScores = new LinkedList<Integer>();
 		HandScoreBlackJack HS = new HandScoreBlackJack();

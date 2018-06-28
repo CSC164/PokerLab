@@ -7,7 +7,7 @@ public abstract class Hand {
 
 	private ArrayList<Card> cards;
 	private HandScore HS;
-
+   
 	public Hand() {
 		cards = new ArrayList<Card>();
 	}

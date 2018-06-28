@@ -7,7 +7,7 @@ import pkgEnum.eRank;
 import pkgEnum.eSuit;
 
 public class CardRankCount implements Comparable {
-
+ 
 	private eRank eRank;
 	private int iCnt;
 	private int iCardPosition;
