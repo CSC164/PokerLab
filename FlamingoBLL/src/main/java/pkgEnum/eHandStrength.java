@@ -38,6 +38,12 @@ public enum eHandStrength {
 			return "Three of a Kind";
 		}
 	},
+	AcesAndEights(35, "isAcesAndEights")
+	{
+		public String toString() {
+			return "Aces and Eights";
+		}	
+	},
 	TwoPair(30, "isTwoPair") {
 		public String toString() {
 			return "Two Pairs";
